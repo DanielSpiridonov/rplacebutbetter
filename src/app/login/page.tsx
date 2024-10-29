@@ -109,7 +109,7 @@ export default function Home() {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   stroke="currentColor"
                   className="w-6 select-none  cursor-pointer h-6 absolute top-2 right-2"
                   tabIndex={-1}
@@ -130,7 +130,7 @@ export default function Home() {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   stroke="currentColor"
                   className="w-6 select-none cursor-pointer h-6 absolute top-2 right-2"
                 >

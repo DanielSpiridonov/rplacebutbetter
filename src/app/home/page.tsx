@@ -3,7 +3,7 @@
 import { auth, db, firebaseObserver } from "@/lib/FirebaseUserClient";
 import { Pixel } from "@/lib/server/testFunctions";
 import { User, browserLocalPersistence, signOut } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -39,6 +39,19 @@ export default function Home() {
       const allPixels = r.data()!.values as Pixel[];
       setPixels(allPixels);
     });
+
+    // Set up a real-time listener for document changes
+    const unsubscribe = onSnapshot(ref, (snapshot) => {
+      if (snapshot.exists()) {
+        const updatedPixels = snapshot.data().values as Pixel[];
+        setPixels(updatedPixels);
+      }
+    });
+
+    // Clean up the listener on unmount
+    return () => {
+      unsubscribe();
+    };
   }, [currentUser]);
 
   const logout = () => {
