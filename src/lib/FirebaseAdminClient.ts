@@ -1,6 +1,6 @@
 "use server";
 import { app } from "firebase-admin";
-import { applicationDefault, cert, initializeApp } from "firebase-admin/app";
+import { cert, initializeApp } from "firebase-admin/app";
 import firebase from "firebase/compat/app";
 
 export const getApp = () => {

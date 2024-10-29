@@ -1,31 +1,19 @@
 "use client";
 
-import clientFirebaseApp, {
+import {
   auth,
   firebaseObserver,
   googleProvider,
 } from "@/lib/FirebaseUserClient";
-import { hiMom, updateName } from "@/lib/server/testFunctions";
-import { response } from "express";
-import { FirebaseError, FirebaseServerApp } from "firebase/app";
+import { updateName } from "@/lib/server/testFunctions";
 import {
-  AuthError,
-  GoogleAuthProvider,
   User,
   browserLocalPersistence,
-  browserSessionPersistence,
   createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  sendEmailVerification,
-  sendPasswordResetEmail,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { request } from "http";
-import { revalidatePath } from "next/cache";
-import { redirect, useRouter } from "next/navigation";
-import router from "next/router";
-import { NextRequest, NextResponse } from "next/server";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
@@ -57,7 +45,7 @@ export default function Home() {
       //redirect to main page
       //OR redirect to /users/currentUser.
       router.push("/home");
-      createUserWithEmailAndPassword();
+      createUserWithEmailAndPassword(); //ignore
     } catch (error) {
       if (error.code == "auth/popup-closed-by-user") {
         console.log("User cancelled login");

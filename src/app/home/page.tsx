@@ -1,41 +1,11 @@
 "use client";
 
-import clientFirebaseApp, {
-  auth,
-  db,
-  firebaseObserver,
-  firestore,
-  googleProvider,
-} from "@/lib/FirebaseUserClient";
-import {
-  getPixels,
-  hiMom,
-  Pixel,
-  updateName,
-} from "@/lib/server/testFunctions";
-import { response } from "express";
-import { FirebaseError, FirebaseServerApp } from "firebase/app";
-import {
-  AuthError,
-  GoogleAuthProvider,
-  User,
-  browserLocalPersistence,
-  browserSessionPersistence,
-  createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  sendEmailVerification,
-  sendPasswordResetEmail,
-  signInWithPopup,
-  signOut,
-} from "firebase/auth";
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
-import { request } from "http";
-import { revalidatePath } from "next/cache";
-import { redirect, useRouter } from "next/navigation";
-import router from "next/router";
-import { NextRequest, NextResponse } from "next/server";
+import { auth, db, firebaseObserver } from "@/lib/FirebaseUserClient";
+import { Pixel } from "@/lib/server/testFunctions";
+import { User, browserLocalPersistence, signOut } from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
 export default function Home() {
   const router = useRouter();
