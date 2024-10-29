@@ -5,7 +5,6 @@ import {
   firebaseObserver,
   googleProvider,
 } from "@/lib/FirebaseUserClient";
-import { updateName } from "@/lib/server/testFunctions";
 import {
   User,
   browserLocalPersistence,
@@ -45,8 +44,8 @@ export default function Home() {
       //redirect to main page
       //OR redirect to /users/currentUser.
       router.push("/home");
-      createUserWithEmailAndPassword(); //ignore
-    } catch (error) {
+      // createUserWithEmailAndPassword(); //ignore
+    } catch (error: any) {
       if (error.code == "auth/popup-closed-by-user") {
         console.log("User cancelled login");
       } else {
@@ -56,11 +55,6 @@ export default function Home() {
   };
   const logout = () => {
     signOut(auth);
-  };
-  const updateUserName = async (newName: string) => {
-    const response = await updateName(newName);
-    if (response.result == "success") alert("Your name has been updated!");
-    else alert("sux to suck");
   };
   const [showPassword, setShowPassword] = useState(false);
 
@@ -118,7 +112,7 @@ export default function Home() {
                   stroke-width="1.5"
                   stroke="currentColor"
                   className="w-6 select-none  cursor-pointer h-6 absolute top-2 right-2"
-                  tabindex="-1"
+                  tabIndex={-1}
                 >
                   <path
                     stroke-linecap="round"
