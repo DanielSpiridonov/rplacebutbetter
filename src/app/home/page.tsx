@@ -30,10 +30,6 @@ export default function Home() {
   }, [pixels]);
 
   useEffect(() => {
-    if (currentUser != null) {
-      router.push("/home");
-    }
-
     const ref = doc(db, "/pixels/pixels/");
     getDoc(ref).then((r) => {
       const allPixels = r.data()!.values as Pixel[];

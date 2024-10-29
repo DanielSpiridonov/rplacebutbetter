@@ -24,3 +24,7 @@ export type Pixel = {
   x: number;
   y: number;
 };
+
+export const serverTime = () => {
+  return Date.now();
+};
