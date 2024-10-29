@@ -214,6 +214,7 @@ export default function Home() {
           id="favcolor"
           name="favcolor"
           onChange={(customvalue) => setSelectedColor(customvalue.target.value)}
+          value={selectedColor}
         ></input>
         <h1 className="text-black"> &#8592; Custom color</h1>
       </div>
