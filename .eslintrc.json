@@ -1,4 +1,6 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript"],
-  "ignoreDuringBuilds": true
+  "eslint": {
+      "ignoreDuringBuilds": true
+  }
 }

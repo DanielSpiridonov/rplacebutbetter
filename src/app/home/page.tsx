@@ -36,7 +36,7 @@ export default function Home() {
 
     const ref = doc(db, "/pixels/pixels/");
     getDoc(ref).then((r) => {
-      const allPixels = r.data().values as Pixel[];
+      const allPixels = r.data()!.values as Pixel[];
       setPixels(allPixels);
     });
   }, [currentUser]);
