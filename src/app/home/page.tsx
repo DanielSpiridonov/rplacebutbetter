@@ -20,6 +20,9 @@ export default function Home() {
     firebaseObserver.subscribe("authStateChanged", (data: any) => {
       setCurrentUser(auth.currentUser);
     });
+    if (!auth.currentUser) {
+      router.push("/login");
+    }
     return () => {
       firebaseObserver.unsubscribe("authStateChanged");
     };
@@ -85,16 +88,11 @@ export default function Home() {
           </div>
         )}
       </div>
+
       <div className=" grid grid-rows-[repeat(3, 100px)]  grid-cols-[repeat(3,100px)] w-full h-[100vh] bg-white border-solid border-2 border-blue border-1">
         <Grid />
       </div>
 
-      {/* <div
-        onClick={() => logout()}
-        className="absolute bottom-10 right-5 text-black"
-      >
-        Sign out
-      </div> */}
       <svg
         onClick={() => logout()}
         className="absolute bottom-5 right-5 text-black cursor-pointer border-solid border-2 p-2 rounded-full border-black"
@@ -212,7 +210,7 @@ export default function Home() {
           onChange={(customvalue) => setSelectedColor(customvalue.target.value)}
           value={selectedColor}
         ></input>
-        <h1 className="text-black"> &#8592; Custom color</h1>
+        <h1 className="text-black"> Custom color</h1>
       </div>
     </div>
   );
