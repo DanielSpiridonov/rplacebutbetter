@@ -120,7 +120,7 @@ export default function Home() {
           </g>{" "}
         </g>
       </svg>
-      <div className="w-1/4 h-18 bg-[#939393] absolute left-5 bottom-5 gap-2 p-1 flex flex-wrap rounded-lg border-solid border-black border-2 justify-center drop-shadow-lg">
+      <div className="w-[22rem] h-18 bg-[#939393] absolute left-5 bottom-5 gap-2 p-1 flex flex-wrap rounded-lg border-solid border-black border-2 justify-center drop-shadow-lg">
         <div
           className="bg-black w-6 h-6 border-solid border-black border-2 rounded-2xl cursor-pointer"
           onClick={() => setSelectedColor("black")}
