@@ -131,7 +131,7 @@ export default function Home() {
   return (
     <div
       id="bg"
-      className="overflow-hidden w-screen h-screen max-w-full zoom sm:overflow-x-scroll"
+      className="overflow-hidden w-screen h-screen max-w-full zoom sm:overflow-scroll"
     >
       <div>
         {auth.currentUser && (
