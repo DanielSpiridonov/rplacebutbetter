@@ -72,7 +72,7 @@ export default function Home() {
       //add currentRow to pixels
     }
 
-    const allPixels = [];
+    const allPixels: any = [];
     allRows.forEach((row) => {
       allPixels.push(...row);
     });
