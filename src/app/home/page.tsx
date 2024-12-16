@@ -87,7 +87,7 @@ export default function Home() {
     pixels?.map((x, index) => (
       <span
         key={index}
-        className="  w-[10px] h-[10px] border-solid border-black "
+        className="  w-[10px] h-[10px] border-solid border-black outline outline-1"
         style={{ backgroundColor: x.color }}
         onClick={() => {
           const pixelValue = x.x + x.y * 152; //umnoji po shirina
@@ -114,7 +114,20 @@ export default function Home() {
         event.preventDefault();
       }
     });
+    document.addEventListener(
+      "wheel",
+      function (e) {
+        //hackerman
+        if (Math.abs(e.deltaY) > 50) {
+          e.preventDefault();
+        }
+      },
+      {
+        passive: false, // Must be false to use preventDefault
+      }
+    );
   }
+
   return (
     <div id="bg" className="overflow-hidden w-screen h-screen max-w-full zoom">
       <div>
