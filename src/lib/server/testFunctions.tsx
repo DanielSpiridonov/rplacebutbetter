@@ -20,7 +20,6 @@ export const getPixels = async () => {
 
 export type Pixel = {
   color: string;
-  lastUpdate: Date;
   x: number;
   y: number;
 };

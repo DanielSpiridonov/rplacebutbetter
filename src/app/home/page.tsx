@@ -3,7 +3,7 @@
 import { auth, db, firebaseObserver } from "@/lib/FirebaseUserClient";
 import { Pixel } from "@/lib/server/testFunctions";
 import { User, browserLocalPersistence, signOut } from "firebase/auth";
-import { doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
+import { addDoc, doc, getDoc, onSnapshot, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -57,15 +57,40 @@ export default function Home() {
     signOut(auth);
     router.push("/login");
   };
+  const populateDb = () => {
+    let allRows: Pixel[][] = [];
+    for (let y = 0; y < 120; y++) {
+      const currentRow = [];
+      for (let x = 0; x < 152; x++) {
+        currentRow.push({
+          color: "#FFFFFF",
+          x: x,
+          y: y,
+        });
+      }
+      allRows.push(currentRow);
+      //add currentRow to pixels
+    }
+
+    const allPixels = [];
+    allRows.forEach((row) => {
+      allPixels.push(...row);
+    });
+    alert(allPixels.length);
+    setPixels(allPixels);
+    //newPixels =[] // const ref = doc(db, `/pixels/pixels/`);
+    // const ref = doc(db, "pixels", "pixels");
+    // setDoc(ref, { values: newPixels }).then(() => alert("pixels added!"));
+  };
 
   const Grid = () =>
-    pixels.map((x, index) => (
+    pixels?.map((x, index) => (
       <span
         key={index}
-        className="border-solid border-y border-x border-black w-[100px] h-[100px]"
+        className="  w-[10px] h-[10px] border-solid border-black "
         style={{ backgroundColor: x.color }}
         onClick={() => {
-          const pixelValue = x.x + x.y * 3;
+          const pixelValue = x.x + x.y * 152; //umnoji po shirina
           console.log(`clicked on pixel No ${pixelValue}`);
 
           const _pixels = pixels.map((pixel, i) =>
@@ -73,14 +98,25 @@ export default function Home() {
           );
 
           const ref = doc(db, `/pixels/pixels/`);
+
           setDoc(ref, { values: _pixels });
           setPixels(_pixels as Pixel[]);
         }}
       ></span>
     ));
 
+  if (typeof window !== "undefined") {
+    window.addEventListener("keydown", (event) => {
+      if (
+        (event.ctrlKey || event.metaKey) && // For Mac Command Key
+        (event.key === "+" || event.key === "-" || event.key === "=")
+      ) {
+        event.preventDefault();
+      }
+    });
+  }
   return (
-    <div className="">
+    <div id="bg" className="overflow-hidden w-screen h-screen max-w-full zoom">
       <div>
         {auth.currentUser && (
           <div className="absolute top-10 right-10 text-black italic ">
@@ -89,20 +125,20 @@ export default function Home() {
         )}
       </div>
 
-      <div className=" grid grid-rows-[repeat(3, 100px)]  grid-cols-[repeat(3,100px)] w-full h-[100vh] bg-white border-solid border-2 border-blue border-1">
+      <div className="px-2 gap-0 grid grid-rows-[repeat(120, 10px)]  grid-cols-[repeat(152,10px)] bg-white ">
         <Grid />
       </div>
 
       <svg
         onClick={() => logout()}
-        className="absolute bottom-5 right-5 text-black cursor-pointer border-solid border-2 p-2 rounded-full border-black"
+        className="absolute bottom-5 right-5 text-black cursor-pointer border-solid border-2 p-2 rounded-full border-black hover:scale-110"
         fill="#000000"
         version="1.1"
         id="Capa_1"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
-        width="56px"
-        height="56px"
+        width="52px"
+        height="52px"
         viewBox="0 0 492.5 492.5"
         xmlSpace="preserve"
       >
