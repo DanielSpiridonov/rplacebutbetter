@@ -1,5 +1,5 @@
 "use client";
-
+// Import necessary modules and libraries
 import { auth, db, firebaseObserver } from "@/lib/FirebaseUserClient";
 import { Pixel } from "@/lib/server/testFunctions";
 import { User, browserLocalPersistence, signOut } from "firebase/auth";
@@ -9,17 +9,18 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const router = useRouter();
-  const [currentUser, setCurrentUser] = useState<User | null>(auth.currentUser);
-  const [pixels, setPixels] = useState<Pixel[] | []>([]);
-  const [selectedColor, setSelectedColor] = useState("");
+  const [currentUser, setCurrentUser] = useState<User | null>(auth.currentUser); // Stores the current authenticated user
+  const [pixels, setPixels] = useState<Pixel[] | []>([]); // Stores the pixel data
+  const [selectedColor, setSelectedColor] = useState(""); // Tracks the currently selected color
 
   useEffect(() => {
-    auth.setPersistence(browserLocalPersistence);
+    auth.setPersistence(browserLocalPersistence); // Ensures session persistence across refreshes
     // getPixels().then((pixels) => setPixels(JSON.parse(pixels)));
 
+    // Subscribe to Firebase authentication state changes
     firebaseObserver.subscribe("authStateChanged", (data: any) => {
       setCurrentUser(auth.currentUser);
-    });
+    }); // Redirect to login if no user is logged in
     if (!auth.currentUser) {
       router.push("/login");
     }
@@ -29,17 +30,18 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    console.log(pixels);
+    console.log(pixels); // Log pixel updates for debugging
   }, [pixels]);
 
   useEffect(() => {
-    const ref = doc(db, "/pixels/pixels/");
+    const ref = doc(db, "/pixels/pixels/"); // Reference to the Firestore document
+    // Fetch the initial pixel data
     getDoc(ref).then((r) => {
       const allPixels = r.data()!.values as Pixel[];
       setPixels(allPixels);
     });
 
-    // Set up a real-time listener for document changes
+    // Listen for real-time updates to the pixel data
     const unsubscribe = onSnapshot(ref, (snapshot) => {
       if (snapshot.exists()) {
         const updatedPixels = snapshot.data().values as Pixel[];
@@ -54,8 +56,8 @@ export default function Home() {
   }, [currentUser]);
 
   const logout = () => {
-    signOut(auth);
-    router.push("/login");
+    signOut(auth); // Logs out the user
+    router.push("/login"); // Redirects to login page
   };
   const populateDb = () => {
     let allRows: Pixel[][] = [];
@@ -63,15 +65,15 @@ export default function Home() {
       const currentRow = [];
       for (let x = 0; x < 152; x++) {
         currentRow.push({
-          color: "#FFFFFF",
-          x: x,
-          y: y,
+          color: "#FFFFFF", // Initialize all pixels with white color
+          x: x, // Pixel X-coordinate
+          y: y, // Pixel Y-coordinate
         });
       }
       allRows.push(currentRow);
       //add currentRow to pixels
     }
-
+    // Flatten rows into a single array
     const allPixels: any = [];
     allRows.forEach((row) => {
       allPixels.push(...row);
@@ -104,7 +106,7 @@ export default function Home() {
         }}
       ></span>
     ));
-
+  // Prevent zooming with Ctrl/Command + mouse wheel or keys
   if (typeof window !== "undefined") {
     window.addEventListener("keydown", (event) => {
       if (
@@ -113,7 +115,7 @@ export default function Home() {
       ) {
         event.preventDefault();
       }
-    });
+    }); // Prevent excessive scrolling with the mouse wheel
     document.addEventListener(
       "wheel",
       function (e) {
